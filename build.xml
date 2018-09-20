@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<project name ="Compilatin de Tetris" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+		<property name="src.dir" value="src"></property>
+		<property name="obj.dir" value="bin"></property>
+		<property name="libs.dir" value="lib"></property>
+		<property name="main-class" value="fr.ubo.tetris.Tetris"></property>
+		<property name="compile.classpath" value="${basedir}/lib/commons-lang3-3.5.jar"></property>
+		<target name="clean" description="clean build">
+			<echo message="Suppression des fichiers issus de compilation"/>
+			<delete dir="bin"/>
+			<delete dir="dist"/>
+			<delete dir="lib"/>
+			<mkdir dir="lib"/>
+		</target>
+		<target name ="compile" depends="clean">
+			<mkdir dir="bin"/>
+			<javac  destdir="bin"  executable="${javac.version}">
+				<src path="src"/>
+				<classpath path="lib/commons-lang3-3.5.jar"/>
+			</javac>
+		
+		</target>
+		<target name="dist" depends="clean,compile">
+			<mkdir dir="dist" />
+				<manifest file="${basedir}/bin/manifest.mf">
+					<attribute name="Built-By" value="Zaid"/>
+					<attribute name="Implementation-Version" value="1"/>
+					<attribute name="Main-Class" value="fr.ubo.tetris.Tetris.java"/>
+					<attribute name="Class-Path" value="${basedir}/lib/commons-lang3-3.5.jar"/>
+					
+		
+				</manifest>
+			<jar jarfile="dist/Tetris.jar" basedir="bin" manifest="bin/manifest.mf">
+			</jar>
+		
+		</target>
+		<target name="retrieve" >
+			<ivy:settings/>
+			<ivy:resolve />
+			<ivy:retrieve sync="true" type="jar" />
+		</target>
+		
+	</project>
